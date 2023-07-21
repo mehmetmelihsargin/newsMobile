@@ -9,11 +9,15 @@ import {
   useColorScheme,
   Text,
   Image,
+  TouchableOpacity,
+  Linking,
 } from 'react-native';
 import axios from 'axios';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import settingIcon from './assets/settingIcon.png';
+import backArrow from './assets/backArrow.png';
 
-const Home = () => {
+const App = () => {
   const [newsList, setNewsList] = useState([]);
   const [value, onChangeText] = useState('Haber başlığı arayın...');
 
@@ -41,7 +45,9 @@ const Home = () => {
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
-
+  const onPress = (url: any) => {
+    Linking.openURL(url);
+  };
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
@@ -52,6 +58,7 @@ const Home = () => {
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
         <View style={styles.headerView}>
+          <Image style={styles.assets} source={backArrow} />
           <TextInput
             editable
             maxLength={40}
@@ -61,14 +68,19 @@ const Home = () => {
             onFocus={() => onChangeText('')}
             onBlur={() => onChangeText('Haber başlığı arayın...')}
           />
+          <Image style={styles.assets} source={settingIcon} />
         </View>
         <View style={styles.container}>
           {newsList.map((item: any) => (
-            <View style={styles.contentView}>
-              <Image style={styles.tinyLogo} source={getRandomImage()} />
-              <Text>{item.author}</Text>
-              <Text>{item.title}</Text>
-            </View>
+            <TouchableOpacity
+              key={item.title}
+              onPress={() => onPress(item.url)}>
+              <View style={styles.contentView}>
+                <Image style={styles.tinyLogo} source={getRandomImage()} />
+                <Text>{item.author}</Text>
+                <Text>{item.title}</Text>
+              </View>
+            </TouchableOpacity>
           ))}
         </View>
       </ScrollView>
@@ -86,8 +98,11 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   tinyLogo: {
-    width: 220,
+    width: 300,
     height: 220,
+  },
+  assets: {
+    height: 25,
   },
   sectionDescription: {
     marginTop: 8,
@@ -99,14 +114,19 @@ const styles = StyleSheet.create({
   },
   headerView: {
     display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     padding: 20,
-    backgroundColor: '#0ea5e9',
+    backgroundColor: '#7432ff',
   },
   headerInput: {
-    backgroundColor: '#ecfdf5',
+    backgroundColor: 'white',
     color: '#000',
     borderRadius: 15,
     fontSize: 18,
+    width: 280,
+    paddingHorizontal: 12,
   },
   container: {
     padding: 16,
@@ -151,7 +171,11 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     padding: 16,
     alignItems: 'center',
+    borderColor: '#c5f516',
+    borderWidth: 2,
+    margin: 8,
+    borderRadius: 10,
   },
 });
 
-export default Home;
+export default App;
