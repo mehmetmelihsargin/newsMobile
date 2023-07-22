@@ -77,8 +77,8 @@ const App = () => {
               onPress={() => onPress(item.url)}>
               <View style={styles.contentView}>
                 <Image style={styles.tinyLogo} source={getRandomImage()} />
-                <Text>{item.author}</Text>
-                <Text>{item.title}</Text>
+                <Text style={styles.text}>{item.author}</Text>
+                <Text style={styles.text}>{item.title}</Text>
               </View>
             </TouchableOpacity>
           ))}
@@ -100,6 +100,9 @@ const styles = StyleSheet.create({
   tinyLogo: {
     width: 300,
     height: 220,
+  },
+  text: {
+    color: 'black',
   },
   assets: {
     height: 25,
