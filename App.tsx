@@ -61,7 +61,7 @@ const App = () => {
           <Image style={styles.assets} source={backArrow} />
           <TextInput
             editable
-            maxLength={40}
+            maxLength={20}
             onChangeText={text => onChangeText(text)}
             value={value}
             style={styles.headerInput}
